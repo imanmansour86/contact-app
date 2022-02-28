@@ -15,19 +15,24 @@ const initdb = async () =>
   });
 
 // TODO: Complete the postDb() function below:
-export const postDb = async (name, home, cell, email) => {
-    console.log("POST all from the database");
-    const contactDb = await openDB("contactdb", 1);
-    const tx = contactDb.transaction("contactdb", "readwrite");
-    const store = tx.objectStore("contactdb");
-    const request = store.add({name:name, home:home, cell:cell, email:email});
-    const result = await request;
-    if (result) {
-      console.log("result", result);
-      return result;
-    } else {
-      console.error("getDb not implemented");
-    }
+export const postDb = async (name, home_phone, cell_phone, email) => {
+  console.log("POST all from the database");
+  const contactDb = await openDB("contactdb", 1);
+  const tx = contactDb.transaction("contactdb", "readwrite");
+  const store = tx.objectStore("contactdb");
+  const request = store.add({
+    name: name,
+    cell_phone: cell_phone,
+    home_phone: home_phone,
+    email: email,
+  });
+  const result = await request;
+  if (result) {
+    console.log("result", result);
+    return result;
+  } else {
+    console.error("getDb not implemented");
+  }
 };
 
 // TODO: Complete the getDb() function below:
@@ -37,6 +42,7 @@ export const getDb = async () => {
   const tx = contactDb.transaction("contactdb", "readonly");
   const store = tx.objectStore("contactdb");
   const request = store.getAll();
+  console.log(request.name);
   const result = await request;
   if (result) {
     console.log("result", result);
